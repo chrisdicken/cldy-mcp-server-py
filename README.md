@@ -2,9 +2,29 @@
 
 A Python MCP server for the IBM Cloudability API V3 with **77 tools** across 12 domains. Works with Bob, Cursor, Claude Desktop, VS Code, and any MCP-compatible interface.
 
-![Demo](CLDY-MCP.gif)
+## Manage Cloudability with natural language!
 
-> **Migrating from the TypeScript server?** Tool names are identical — just swap the command. See [Migration](#migration-from-typescript-server).
+### 1. Query Cloudability 
+Effortlessly retrieve cost data, usage metrics, and billing information using natural language queries. No need to remember complex API endpoints or parameters - simply ask for what you need and get comprehensive cost reports instantly.
+
+![Cost Report](Cost%20Report.gif)
+
+### 2. Create Business Mappings with Images or File Uploads
+Transform your business mapping requirements into reality with Bob as your intelligent agent. Simply upload an image of your mapping structure or paste a screenshot, and Bob will automatically create the corresponding business mappings in Cloudability. No more manual API calls or Postman configurations - just natural language instructions and visual inputs.
+
+![Business Mapping](business%20mapping.gif)
+
+![Business Mappings](Business%20Mappings1.png)
+
+### 3. Automatically create views
+Streamline your workflow by using the MCP server to automatically generate views based on your business mappings or custom criteria. Say goodbye to repetitive Postman calls and manual configuration - create dozens of views in seconds with simple natural language commands.
+
+![Views](Views.gif)
+
+![Views Example](Views1.png)
+
+### 4. That's not all! Use the 77 additional tools to automate Cloudability configuration
+From budget management and anomaly detection to container cost allocation and workload planning - leverage the full power of Cloudability's API through natural language. Automate complex workflows, manage users, configure alerts, and optimize your cloud spend without writing a single line of code.
 
 ---
 
@@ -255,17 +275,3 @@ uv sync --all-extras   # installs dev dependencies
 uv run pytest
 ```
 
----
-
-## Migration from TypeScript Server
-
-Tool names are identical between this server and `cldy-mcp-server-master`. To migrate:
-
-1. Replace the MCP command from `node dist/index.js` → `uv run mcp_server_local.py`
-2. `CLOUDABILITY_API_KEY` works unchanged — no env var changes needed
-
-What this server adds over the TypeScript version:
-- Returns full `{result, meta}` envelope including pagination tokens
-- `search_tools` for progressive tool discovery
-- `response_shape=summary` on cost reports (returns row count + sample rows — safe for agents)
-- Proper multipart upload for workload resources

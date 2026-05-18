@@ -19,11 +19,16 @@ class BusinessMappingsGroup(BaseAPIGroup):
         ) -> dict:
             """Create a custom business dimension for cost allocation. Use rules to map cloud resources to business categories based on tags, accounts, or other attributes.
             
+            IMPORTANT: Conditions must use the DIMENSION['field_name'] syntax for dimension fields, TAG['tag_name'] for tags, or METRIC['metric_name'] for metrics.
+            
             Args:
                 name: Name of the business dimension
-                rules: List of condition/value pairs (e.g., [{"condition": "tag_Environment==prod", "value": "Production"}])
+                rules: List of condition/value pairs. Examples:
+                    - [{"condition": "DIMENSION['vendor_account_identifier'] == 'account-123'", "value": "Production"}]
+                    - [{"condition": "TAG['Environment'] == 'prod'", "value": "Production"}]
+                    - [{"condition": "DIMENSION['vendor'] == 'Amazon'", "value": "AWS"}]
                 default_value: Static default value when no rules match
-                default_value_expression: Expression for dynamic default value (e.g., "tag_Team")
+                default_value_expression: Expression for dynamic default value (e.g., "TAG['Team']" or "DIMENSION['service_name']")
             """
             params: dict[str, Any] = {"name": name}
             if rules:
@@ -66,10 +71,15 @@ class BusinessMappingsGroup(BaseAPIGroup):
         ) -> dict:
             """Update an existing business dimension. Note: name is required by the API when updating.
             
+            IMPORTANT: Conditions must use the DIMENSION['field_name'] syntax for dimension fields, TAG['tag_name'] for tags, or METRIC['metric_name'] for metrics.
+            
             Args:
                 id: Business dimension ID
                 name: Updated name (required by API)
-                rules: Updated list of condition/value pairs
+                rules: Updated list of condition/value pairs. Examples:
+                    - [{"condition": "DIMENSION['vendor_account_identifier'] == 'account-123'", "value": "Production"}]
+                    - [{"condition": "TAG['Environment'] == 'prod'", "value": "Production"}]
+                    - [{"condition": "DIMENSION['vendor'] == 'Amazon'", "value": "AWS"}]
                 state: State of the dimension (e.g., "active", "inactive")
             """
             params: dict[str, Any] = {}
